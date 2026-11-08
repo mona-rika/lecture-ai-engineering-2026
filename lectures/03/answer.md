@@ -48,7 +48,35 @@
 
 ## 宿題
 
-- 取り組んだレベル：基礎 / 実装 / 発展
+- 取り組んだレベル：
+```
+基礎 / 実装
+```
 - やったこと：
+```
+●基礎（INSTRUCTIONSを変えて比べる）
+「INSTRUCTIONS」に答えを出力するよう指定したことで、変更前は問題文の提示のみにとどまっていたが、出題と同時に正解や根拠となる解説までまとめて提示するよう変化することを確認できた。
+
+●実装（保存の前に確認を挟む）
+
+app/tools.py に、指定された内容を learning_log/ フォルダ配下にタイムスタンプ付きテキストファイルとして保存する save_learning_log ツールを実装。
+
+app/agent.py の Agent 初期化時に output_type=[str, DeferredToolRequests] を設定し、save_learning_log を requires_approval=True として登録。
+
+main() 関数内に、モデルからツールの保留リクエスト（DeferredToolRequests）が返された際に、ターミナル上でユーザーに実行可否（y/n）を確認し、結果を DeferredToolResults として再実行ループに渡す処理を実装。
+```
+
 - 結果：
+```
+▼コマンド: 
+uv run python -m app.agent --trace "今日の勉強内容（LoRAとQLoRAの違い）を記録として保存して
+
+▼結果
+エージェントが自律的に用語集（search_glossary）から LoRA と QLoRA の正確な定義を取得後、ファイル書き込み（save_learning_log）を行う前に一時停止し、ユーザーの承認（y 入力）を経てからログファイルへ安全に保存されることを確認できた。
+```
 - 気づき・疑問：
+```
+安全性の担保（Human-in-the-Loop）: ファイル作成や外部API実行など副作用を伴う操作に対して、モデルが勝手に実行するのではなく人間の確認を挟む設計の重要性を実感した。
+
+履歴の維持と再実行: message_history=result.all_messages() と DeferredToolResults を併用することで、これまでの文脈やモデルが生成したツール呼び出し引数を保持したまま、スムーズに承認結果を反映して会話を再開できる仕組みが理解できた。
+```

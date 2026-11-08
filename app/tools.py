@@ -9,6 +9,10 @@ import random
 from functools import cache
 from pathlib import Path
 
+# (第3回 宿題 - 実装): tools.py に save_learning_log を追加
+from pathlib import Path
+from datetime import datetime
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 MAX_RESULTS = 3
 
@@ -100,3 +104,19 @@ def make_quiz(lecture: int) -> str:
         "answer": item["definition"]
     }
     return json.dumps(quiz, ensure_ascii=False)
+
+#第3回宿題：実装
+def save_learning_log(content: str) -> str:
+    """学習の記録を learning_log/ フォルダに保存する。
+    
+    ユーザーが学習内容の記録・保存を求めたときに使う。
+    """
+    log_dir = Path("learning_log")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    
+    # タイムスタンプをファイル名にする
+    filename = datetime.now().strftime("%Y%m%d_%H%M%S.txt")
+    file_path = log_dir / filename
+    
+    file_path.write_text(content, encoding="utf-8")
+    return f"学習記録を保存しました: {file_path}"
