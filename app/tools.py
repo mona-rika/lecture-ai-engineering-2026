@@ -5,8 +5,13 @@
 """
 
 import json
+import random
 from functools import cache
 from pathlib import Path
+
+# (第3回 宿題 - 実装): tools.py に save_learning_log を追加
+from pathlib import Path
+from datetime import datetime
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 MAX_RESULTS = 3
@@ -77,3 +82,41 @@ def get_lecture_summary(lecture: int) -> str:
         available = sorted(p.stem for p in (DATA_DIR / "lectures").glob("*.md"))
         return f"第{lecture}回の要点はまだありません。用意されている回: {', '.join(available)}"
     return path.read_text(encoding="utf-8")
+
+
+def make_quiz(lecture: int) -> str:
+    """指定した回の用語から1つを選び、確認問題と答えを返す。
+    「第2回の確認問題を出して」のように、復習用の問題を求められたときに使う。
+    """
+    # 1. load_glossary() から lecture が一致する用語を集める
+    glossary = load_glossary()
+    target_items = [item for item in glossary if item.get("lecture") == lecture]
+    
+    if not target_items:
+        return json.dumps({"error": f"第{lecture}回の用語が見つかりませんでした。"}, ensure_ascii=False)
+    
+    # 2. 1 つ選ぶ（random.choice）
+    item = random.choice(target_items)
+    
+    # 3. 問題と答えを文字列で返す（ json.dumps など）
+    quiz = {
+        "question": f"第{lecture}回の用語「{item['term']}」の意味は何ですか？",
+        "answer": item["definition"]
+    }
+    return json.dumps(quiz, ensure_ascii=False)
+
+#第3回宿題：実装
+def save_learning_log(content: str) -> str:
+    """学習の記録を learning_log/ フォルダに保存する。
+    
+    ユーザーが学習内容の記録・保存を求めたときに使う。
+    """
+    log_dir = Path("learning_log")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    
+    # タイムスタンプをファイル名にする
+    filename = datetime.now().strftime("%Y%m%d_%H%M%S.txt")
+    file_path = log_dir / filename
+    
+    file_path.write_text(content, encoding="utf-8")
+    return f"学習記録を保存しました: {file_path}"
