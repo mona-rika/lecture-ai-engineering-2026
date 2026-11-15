@@ -57,6 +57,11 @@ class CriterionVerdict(BaseModel):
     reason: str = Field(description="判定の理由。日本語で 1〜2 文")
     verdict: Verdict = Field(description="pass / fail / unsure のどれか")
 
+    # """1 つの基準に対する判定を入れ替える。verdict を先に書かせてから reason を決めさせる（判定→理由の順）。"""
+
+    # verdict: Verdict = Field(description="pass / fail / unsure のどれか")
+    # reason: str = Field(description="判定の理由。日本語で 1〜2 文")
+
 
 class JudgeResult(BaseModel):
     grounding: CriterionVerdict = Field(description="根拠：用語集と矛盾せず、ないことは断定していないか")
