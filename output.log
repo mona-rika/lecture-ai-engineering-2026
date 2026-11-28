@@ -1,0 +1,1306 @@
+=== 2026-11-26 14:52:51 ===
++ uv run python -m app.agent --list-tools
+モデルに見えているツール: 1 個
+
+[search_materials]
+  第1〜3回の本講義資料を検索し、関連ページの本文・タイトル・ページ番号を返す。
+  
+  queryに調べたい内容を指定する。
+  引数: {"query": {"type": "string"}}
+=== 2026-11-26 14:53:26 ===
++ uv run python -m app.mcp_agent --list-tools
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+モデルに見えているツール: 1 個
+
+[glossary_search_glossary]
+  講座の用語集から用語を検索し、定義と、どの回で扱うかを返す。
+  
+  AIエンジニアリングの用語や、この講座（AIE2026）に固有の言葉について
+  答える前に使うこと。query には調べたい用語を1つだけ入れる（例: "LoRA"）。
+  引数: {"query": {"title": "Query", "type": "string"}}
+=== 2026-11-26 14:59:53 ===
++ uv run python -m app.mcp_agent --trace AIE2026の講座の宿題にある「3レベル」とは何ですか？
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+AIE2026の講座における「3レベル」とは、宿題の構成を示す言葉で、**「基礎」「実装」「発展」**の3つの段階を指します。
+
+それぞれのレベルには以下のような特徴があり、どれか1つに取り組めばその回の宿題は完了となります：
+
+* **基礎**: 講義内容の確認を行います。
+* **実装**: 実際に自分でコードを書きます。
+* **発展**: 調査や応用的な試行を行います。
+
+なお、原則として宿題の採点は行われません。まずはご自身の興味や理解度に合わせて、いずれかのレベルを選んで取り組んでみてください。
+
+関連する回：第1回
+
+--- trace ---
+[tool call]   glossary_search_glossary({'query': '3レベル'})
+[tool return] glossary_search_glossary -> [{"term": "宿題の3レベル", "lecture": 1, "definition": "AIE2026の宿題の構成。「基礎（講義内容の確認）」「実装（自分でコードを書く）」「発展（調査や試行）」の3段階があり、どれか1つに取り組…
+[usage] 入力 715 tokens / 出力 166 tokens / モデル応答 2 回
+=== 2026-11-26 15:18:54 ===
++ uv run python -m app.mcp_agent --list-tools
+Downloading pydantic-core (2.2MiB)
+Downloading lxml (5.0MiB)
+ Downloaded pydantic-core
+ Downloaded lxml
+Installed 46 packages in 702ms
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+モデルに見えているツール: 2 個
+
+[glossary_search_glossary]
+  講座の用語集から用語を検索し、定義と、どの回で扱うかを返す。
+  
+  AIエンジニアリングの用語や、この講座（AIE2026）に固有の言葉について
+  答える前に使うこと。query には調べたい用語を1つだけ入れる（例: "LoRA"）。
+  引数: {"query": {"title": "Query", "type": "string"}}
+
+[fetch_fetch]
+  Fetches a URL from the internet and optionally extracts its contents as markdown.
+  
+  Although originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.
+  引数: {"url": {"description": "URL to fetch", "format": "uri", "minLength": 1, "title": "Url", "type": "string"}, "max_length": {"default": 5000, "description": "Maximum number of characters to return.", "maximum": 999999, "minimum": 1, "title": "Max Length", "type": "integer"}, "start_index": {"default": 0, "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.", "minimum": 0, "title": "Start Index", "type": "integer"}, "raw": {"default": false, "description": "Get the actual HTML content of the requested page, without simplification.", "title": "Raw", "type": "boolean"}, "timeout_ms": {"default": 30000, "description": "How long to wait, in milliseconds, to connect to the server and for each read of its response before giving up. Raise it for a slow server or a large download; lower it to fail fast.", "maximum": 600000, "minimum": 100, "title": "Timeout Ms", "type": "integer"}}
+=== 2026-11-26 15:20:10 ===
++ uv run python -m app.mcp_agent --trace https://modelcontextprotocol.io/ の冒頭を日本語で3行に要約して
+HTTP Request: GET https://modelcontextprotocol.io/robots.txt "HTTP/1.1 200 OK"
+HTTP Request: GET https://modelcontextprotocol.io/ "HTTP/1.1 307 Temporary Redirect"
+HTTP Request: GET https://modelcontextprotocol.io/robots.txt "HTTP/1.1 200 OK"
+HTTP Request: GET https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro.md "HTTP/1.1 200 OK"
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+Model Context Protocol（MCP）は、AIアプリケーションと外部システム（データソース、ツール、ワークフローなど）を接続するためのオープンソースの標準規格です。
+AIにとっての「USB-Cポート」のような役割を果たし、ClaudeやChatGPTなどのAIが様々な情報にアクセスし、タスクを実行できるようにします。
+MCPを活用することで、開発者は統合の手間を減らし、AIアプリケーションの能力やユーザー体験を向上させることができます。
+
+--- trace ---
+[tool call]   fetch_fetch({'url': 'https://modelcontextprotocol.io/'})
+[tool return] fetch_fetch -> Contents of https://modelcontextprotocol.io/:
+> ## Documentation Index
+> Fetch the complete documentation index at: http…
+[usage] 入力 2,230 tokens / 出力 115 tokens / モデル応答 2 回
+=== 2026-11-26 16:19:59 ===
++ uv run python -m app.mcp_agent --list-tools
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+モデルに見えているツール: 7 個
+
+[glossary_search_glossary]
+  講座の用語集から用語を検索し、定義と、どの回で扱うかを返す。
+  
+  AIエンジニアリングの用語や、この講座（AIE2026）に固有の言葉について
+  答える前に使うこと。query には調べたい用語を1つだけ入れる（例: "LoRA"）。
+  引数: {"query": {"title": "Query", "type": "string"}}
+
+[fetch_fetch]
+  Fetches a URL from the internet and optionally extracts its contents as markdown.
+  
+  Although originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.
+  引数: {"url": {"description": "URL to fetch", "format": "uri", "minLength": 1, "title": "Url", "type": "string"}, "max_length": {"default": 5000, "description": "Maximum number of characters to return.", "maximum": 999999, "minimum": 1, "title": "Max Length", "type": "integer"}, "start_index": {"default": 0, "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.", "minimum": 0, "title": "Start Index", "type": "integer"}, "raw": {"default": false, "description": "Get the actual HTML content of the requested page, without simplification.", "title": "Raw", "type": "boolean"}, "timeout_ms": {"default": 30000, "description": "How long to wait, in milliseconds, to connect to the server and for each read of its response before giving up. Raise it for a slow server or a large download; lower it to fail fast.", "maximum": 600000, "minimum": 100, "title": "Timeout Ms", "type": "integer"}}
+
+[aws_aws___read_documentation]
+  Fetch full AWS doc pages as markdown. `search_documentation` already returns verbatim page chunks, so don't re-read a URL whose chunk you already have to "confirm" or "round out" an answer -- the chunk is the real page text; treat it as authoritative.
+  
+  Reading the full page is justified ONLY when the chunks genuinely lack the content:
+  - an enumeration or aggregation ("list all X", "how many X") needs the complete set and the chunks show only part of it;
+  - no search result is on-topic after refining the query, and a known doc URL would have the answer.
+  Otherwise, answer from the chunks. Use exact URLs from `search_documentation`; don't guess slugs.
+  
+  Input: `requests: [{url, max_length?, start_index?}]`. Batch 2-5.
+  - `max_length` default 10000.
+  - `start_index` default 0; use prior `end_index` to continue, TOC offset to jump.
+  
+  Allow-listed prefixes: docs.aws.amazon.com; aws.amazon.com (not /marketplace); repost.aws/knowledge-center; docs.amplify.aws; ui.docs.amplify.aws; github.com/{aws-cloudformation/aws-cloudformation-templates, aws-samples/{aws-cdk-examples, generative-ai-cdk-constructs-samples, serverless-patterns}, awsdocs/aws-cdk-guide, awslabs/aws-solutions-constructs, cdklabs/cdk-nag} (README on `main`); constructs.dev/packages/{@aws-cdk-containers, @aws-cdk, @cdk-cloudformation, aws-analytics-reference-architecture, aws-cdk-lib, cdk-amazon-chime-resources, cdk-aws-lambda-powertools-layer, cdk-ecr-deployment, cdk-lambda-powertools-python-layer, cdk-serverless-clamscan, cdk8s, cdk8s-plus-33}; strandsagents.com/latest/documentation/docs/; karpenter.sh/docs/; Amazon Braket: {amazon-braket-sdk-python, amazon-braket-schemas-python, amazon-braket-default-simulator-python, amazon-braket-pennylane-plugin-python, amazon-braket-algorithm-library, qiskit-braket-provider, autoqasm, qirtoqasm}.readthedocs.io and github.com/amazon-braket/* (blob/tree/raw).
+  
+  Output: SUCCESS -- markdown + `total_length, start_index, end_index, truncated, redirected_url?` (truncated includes TOC with char ranges). ERROR -- `error_code` in {not_found, invalid_url, throttled, downstream_error, validation_error}.
+  引数: {"requests": {"type": "array", "items": {"type": "object", "properties": {"url": {"type": "string", "description": "Doc URL with allow-listed prefix; use exact URL from search."}, "max_length": {"type": "integer", "description": "Chars returned (default 10000)."}, "start_index": {"type": "integer", "description": "Char offset (default 0). Use prior `end_index` to continue, or TOC offset to jump."}}, "required": ["url"]}, "description": "List of `{url, max_length?, start_index?}`. Batch 2-5."}}
+
+[aws_aws___search_documentation]
+  AWS docs search. Each result's `context` is verbatim page text -- a real chunk of the actual page, not a short snippet -- and usually already contains the answer, so answer directly from it. Use `read_documentation` only when the chunks genuinely lack the needed detail.
+  
+  Pick ONE topic. Add a 2nd ONLY if query genuinely spans domains. Extra topics dilute ranking.
+  
+  - reference_documentation -- API/SDK/CLI specs, config params
+  - current_awareness -- new/released/announced
+  - troubleshooting -- errors, "how to fix" (NOT for conceptual/feature questions)
+  - amplify_docs -- Amplify (+ language)
+  - cdk_docs -- CDK concepts/guides
+  - cdk_constructs -- CDK code samples, L3
+  - cloudformation -- CFN/SAM templates
+  - strands_docs -- Strands Agents SDK (its Skills/agents concepts go here, NOT agent_skills)
+  - agent_skills -- this tool's guided skills (load via `retrieve_skill`)
+  - general (default) -- architecture, best practices, tutorials, feature behavior
+  
+  Results: rank_order (lower=better), url, title, context (verbatim page chunk -- answer directly from it).
+  引数: {"limit": {"type": "integer", "description": "Maximum number of results to return (default 4)."}, "search_phrase": {"type": "string", "description": "Keywords; preserve exact error strings and all task terms verbatim."}, "topics": {"type": "array", "items": {"type": "string", "description": "topic name"}, "description": "Up to 3 from: reference_documentation, current_awareness, troubleshooting, amplify_docs, cdk_docs, cdk_constructs, cloudformation, agent_skills, strands_docs, general. Default [\"general\"]."}}
+
+[aws_aws___list_regions]
+  Retrieve a list of all AWS regions.
+  引数: {}
+
+[aws_aws___get_regional_availability]
+  AWS resource availability per region.
+  
+  - Max 10 regions; multi-region needs `filters`; single-region supports `next_token`.
+  - Status: isAvailableIn | isNotAvailableIn | isPlannedIn | Not Found.
+  - Response key: products | service_apis | cfn_resources.
+  
+  Not for region counts/docs/vague queries -- use `search_documentation` / `list_regions`.
+  
+  Filter values must EXACTLY match AWS's catalog names; guessed, partial, or pluralized names are rejected ("values in filter parameter do not exist"). If unsure of the exact name, first call once for a single region with resource_type set and NO filters to list all valid names, then re-call filtering on the exact match.
+  引数: {"regions": {"type": "array", "items": {"type": "string"}, "description": "AWS region codes (max 10). Multi-region requires `filters`; single-region supports `next_token`."}, "resource_type": {"type": "string", "description": "Required: 'product' | 'api' | 'cfn'."}, "filters": {"type": "array", "items": {"type": "string"}, "description": "Use exact AWS product or sub-feature name.\n\n- product: 'Amazon Bedrock' (service), or sub-features like 'Comprehend Auto Scaling', 'Latency-Based Routing', 'PrivateLink Support'. When the user names a specific sub-feature, filter on the sub-feature -- do NOT generalize to the parent service ('Amazon Comprehend'); that returns availability for the wrong scope.\n- api: 'SdkServiceId+Operation' (e.g. 'CloudFormation+CreateStack', 'IAM+GetSSHPublicKey') or 'SdkServiceId' (e.g. 'EC2'). Use a literal '+' between service and operation -- not space, colon, or hyphen.\n- cfn: 'AWS::EC2::Instance', 'AWS::Lambda::Function'.\n\nInclude every region the user named; don't add filters they didn't request.\n\nValues must EXACTLY match AWS's catalog (e.g. 'AWS Lambda', not 'Lambda' or 'AWS Lambda Service'). If unsure of the exact name, first call once for one region with NO filters to list valid names, then filter on the exact match."}, "next_token": {"type": "string", "description": "Pagination token. Single-region, no filters only."}, "region": {"type": "string", "description": "Unused; use `regions`."}}
+
+[aws_aws___retrieve_skill]
+  Retrieve an AWS skill (workflows, references). Returns SKILL.md, or `file` if given.
+  
+  Call `search_documentation` FIRST and copy `skill_name` verbatim -- it is an opaque registry ID. Never guess or fabricate `skill_name` or `file`.
+  引数: {"file": {"type": "string", "description": "Optional file path within the skill, copied as cited (e.g. `references/architecture.md`). Don't add or strip a `references/` prefix. Omit for SKILL.md."}, "skill_name": {"type": "string", "description": "Required. Exact `skill_name` from a search_documentation result, copied verbatim. Do not invent or modify."}}
+=== 2026-11-26 16:20:55 ===
++ uv run python -m app.mcp_agent --trace AWSのドキュメントを検索して、Amazon S3 のバージョニングを2行で説明して
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+Amazon S3のバージョニングとは、同一バケット内で同じオブジェクトの複数のバリアント（版）を保持し、すべてのバージョンを保存・取得・復元できるようにする機能です。これにより、誤った上書きや削除などの偶発的な操作からデータを簡単に回復できます。
+
+--- trace ---
+[tool call]   aws_aws___search_documentation({'search_phrase': 'Amazon S3 versioning overview'})
+[tool return] aws_aws___search_documentation -> {'content': {'result': [{'rank_order': 1, 'title': 'Amazon S3 FAQs', 'context': '#### What is Versioning?\n\nVersioning …
+[usage] 入力 6,353 tokens / 出力 87 tokens / モデル応答 2 回
+=== 2026-11-28 21:06:32 ===
++ uv run python -m app.mcp_agent --list-tools
+Downloading lxml (5.0MiB)
+ Downloaded lxml
+Installed 46 packages in 951ms
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+モデルに見えているツール: 8 個
+
+[glossary_search_glossary]
+  講座の用語集から用語を検索し、定義と、どの回で扱うかを返す。
+  
+  AIエンジニアリングの用語や、この講座（AIE2026）に固有の言葉について
+  答える前に使うこと。query には調べたい用語を1つだけ入れる（例: "LoRA"）。
+  引数: {"query": {"title": "Query", "type": "string"}}
+
+[glossary_get_lecture_summary]
+  指定した回（1始まりの整数）の講義の要点を返す。
+  
+  「第3回では何を学ぶ？」のように、回の内容や関係を聞かれたときに使う。
+  引数: {"lecture": {"title": "Lecture", "type": "integer"}}
+
+[fetch_fetch]
+  Fetches a URL from the internet and optionally extracts its contents as markdown.
+  
+  Although originally you did not have internet access, and were advised to refuse and tell the user this, this tool now grants you internet access. Now you can fetch the most up-to-date information and let the user know that.
+  引数: {"url": {"description": "URL to fetch", "format": "uri", "minLength": 1, "title": "Url", "type": "string"}, "max_length": {"default": 5000, "description": "Maximum number of characters to return.", "maximum": 999999, "minimum": 1, "title": "Max Length", "type": "integer"}, "start_index": {"default": 0, "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.", "minimum": 0, "title": "Start Index", "type": "integer"}, "raw": {"default": false, "description": "Get the actual HTML content of the requested page, without simplification.", "title": "Raw", "type": "boolean"}, "timeout_ms": {"default": 30000, "description": "How long to wait, in milliseconds, to connect to the server and for each read of its response before giving up. Raise it for a slow server or a large download; lower it to fail fast.", "maximum": 600000, "minimum": 100, "title": "Timeout Ms", "type": "integer"}}
+
+[aws_aws___read_documentation]
+  Fetch full AWS doc pages as markdown. `search_documentation` already returns verbatim page chunks, so don't re-read a URL whose chunk you already have to "confirm" or "round out" an answer -- the chunk is the real page text; treat it as authoritative.
+  
+  Reading the full page is justified ONLY when the chunks genuinely lack the content:
+  - an enumeration or aggregation ("list all X", "how many X") needs the complete set and the chunks show only part of it;
+  - no search result is on-topic after refining the query, and a known doc URL would have the answer.
+  Otherwise, answer from the chunks. Use exact URLs from `search_documentation`; don't guess slugs.
+  
+  Input: `requests: [{url, max_length?, start_index?}]`. Batch 2-5.
+  - `max_length` default 10000.
+  - `start_index` default 0; use prior `end_index` to continue, TOC offset to jump.
+  
+  Allow-listed prefixes: docs.aws.amazon.com; aws.amazon.com (not /marketplace); repost.aws/knowledge-center; docs.amplify.aws; ui.docs.amplify.aws; github.com/{aws-cloudformation/aws-cloudformation-templates, aws-samples/{aws-cdk-examples, generative-ai-cdk-constructs-samples, serverless-patterns}, awsdocs/aws-cdk-guide, awslabs/aws-solutions-constructs, cdklabs/cdk-nag} (README on `main`); constructs.dev/packages/{@aws-cdk-containers, @aws-cdk, @cdk-cloudformation, aws-analytics-reference-architecture, aws-cdk-lib, cdk-amazon-chime-resources, cdk-aws-lambda-powertools-layer, cdk-ecr-deployment, cdk-lambda-powertools-python-layer, cdk-serverless-clamscan, cdk8s, cdk8s-plus-33}; strandsagents.com/latest/documentation/docs/; karpenter.sh/docs/; Amazon Braket: {amazon-braket-sdk-python, amazon-braket-schemas-python, amazon-braket-default-simulator-python, amazon-braket-pennylane-plugin-python, amazon-braket-algorithm-library, qiskit-braket-provider, autoqasm, qirtoqasm}.readthedocs.io and github.com/amazon-braket/* (blob/tree/raw).
+  
+  Output: SUCCESS -- markdown + `total_length, start_index, end_index, truncated, redirected_url?` (truncated includes TOC with char ranges). ERROR -- `error_code` in {not_found, invalid_url, throttled, downstream_error, validation_error}.
+  引数: {"requests": {"type": "array", "items": {"type": "object", "properties": {"url": {"type": "string", "description": "Doc URL with allow-listed prefix; use exact URL from search."}, "max_length": {"type": "integer", "description": "Chars returned (default 10000)."}, "start_index": {"type": "integer", "description": "Char offset (default 0). Use prior `end_index` to continue, or TOC offset to jump."}}, "required": ["url"]}, "description": "List of `{url, max_length?, start_index?}`. Batch 2-5."}}
+
+[aws_aws___search_documentation]
+  AWS docs search. Each result's `context` is verbatim page text -- a real chunk of the actual page, not a short snippet -- and usually already contains the answer, so answer directly from it. Use `read_documentation` only when the chunks genuinely lack the needed detail.
+  
+  Pick ONE topic. Add a 2nd ONLY if query genuinely spans domains. Extra topics dilute ranking.
+  
+  - reference_documentation -- API/SDK/CLI specs, config params
+  - current_awareness -- new/released/announced
+  - troubleshooting -- errors, "how to fix" (NOT for conceptual/feature questions)
+  - amplify_docs -- Amplify (+ language)
+  - cdk_docs -- CDK concepts/guides
+  - cdk_constructs -- CDK code samples, L3
+  - cloudformation -- CFN/SAM templates
+  - strands_docs -- Strands Agents SDK (its Skills/agents concepts go here, NOT agent_skills)
+  - agent_skills -- this tool's guided skills (load via `retrieve_skill`)
+  - general (default) -- architecture, best practices, tutorials, feature behavior
+  
+  Results: rank_order (lower=better), url, title, context (verbatim page chunk -- answer directly from it).
+  引数: {"limit": {"type": "integer", "description": "Maximum number of results to return (default 4)."}, "search_phrase": {"type": "string", "description": "Keywords; preserve exact error strings and all task terms verbatim."}, "topics": {"type": "array", "items": {"type": "string", "description": "topic name"}, "description": "Up to 3 from: reference_documentation, current_awareness, troubleshooting, amplify_docs, cdk_docs, cdk_constructs, cloudformation, agent_skills, strands_docs, general. Default [\"general\"]."}}
+
+[aws_aws___list_regions]
+  Retrieve a list of all AWS regions.
+  引数: {}
+
+[aws_aws___get_regional_availability]
+  AWS resource availability per region.
+  
+  - Max 10 regions; multi-region needs `filters`; single-region supports `next_token`.
+  - Status: isAvailableIn | isNotAvailableIn | isPlannedIn | Not Found.
+  - Response key: products | service_apis | cfn_resources.
+  
+  Not for region counts/docs/vague queries -- use `search_documentation` / `list_regions`.
+  
+  Filter values must EXACTLY match AWS's catalog names; guessed, partial, or pluralized names are rejected ("values in filter parameter do not exist"). If unsure of the exact name, first call once for a single region with resource_type set and NO filters to list all valid names, then re-call filtering on the exact match.
+  引数: {"regions": {"type": "array", "items": {"type": "string"}, "description": "AWS region codes (max 10). Multi-region requires `filters`; single-region supports `next_token`."}, "resource_type": {"type": "string", "description": "Required: 'product' | 'api' | 'cfn'."}, "filters": {"type": "array", "items": {"type": "string"}, "description": "Use exact AWS product or sub-feature name.\n\n- product: 'Amazon Bedrock' (service), or sub-features like 'Comprehend Auto Scaling', 'Latency-Based Routing', 'PrivateLink Support'. When the user names a specific sub-feature, filter on the sub-feature -- do NOT generalize to the parent service ('Amazon Comprehend'); that returns availability for the wrong scope.\n- api: 'SdkServiceId+Operation' (e.g. 'CloudFormation+CreateStack', 'IAM+GetSSHPublicKey') or 'SdkServiceId' (e.g. 'EC2'). Use a literal '+' between service and operation -- not space, colon, or hyphen.\n- cfn: 'AWS::EC2::Instance', 'AWS::Lambda::Function'.\n\nInclude every region the user named; don't add filters they didn't request.\n\nValues must EXACTLY match AWS's catalog (e.g. 'AWS Lambda', not 'Lambda' or 'AWS Lambda Service'). If unsure of the exact name, first call once for one region with NO filters to list valid names, then filter on the exact match."}, "next_token": {"type": "string", "description": "Pagination token. Single-region, no filters only."}, "region": {"type": "string", "description": "Unused; use `regions`."}}
+
+[aws_aws___retrieve_skill]
+  Retrieve an AWS skill (workflows, references). Returns SKILL.md, or `file` if given.
+  
+  Call `search_documentation` FIRST and copy `skill_name` verbatim -- it is an opaque registry ID. Never guess or fabricate `skill_name` or `file`.
+  引数: {"file": {"type": "string", "description": "Optional file path within the skill, copied as cited (e.g. `references/architecture.md`). Don't add or strip a `references/` prefix. Omit for SKILL.md."}, "skill_name": {"type": "string", "description": "Required. Exact `skill_name` from a search_documentation result, copied verbatim. Do not invent or modify."}}
+=== 2026-11-28 21:08:18 ===
++ uv run python -m app.mcp_agent --trace 第2回では何を学びますか？
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第2回では、**「ファインチューニングとLoRA」**をテーマに学びます。
+
+主な内容は以下の通りです：
+
+1. **事前学習とファインチューニングの違い**
+   - 事前学習で汎用的な言語能力を身につけたモデルに、目的のデータで追加学習させる仕組みや、向く場面・向かない場面（出力形式や口調の調整など）を学びます。
+2. **SFT（教師ありファインチューニング）**
+   - 入力と望ましい出力のペアを使った学習方法と、データの質・形式の重要性を学びます。
+3. **PEFTとLoRA**
+   - 全パラメータを更新するのではなく、小さな低ランク行列だけを学習させることでGPUメモリや保存容量を大きく削減する「LoRA」の考え方を学びます。
+4. **QLoRAとの関係や過学習の注意点**
+   - 4bit量子化とLoRAを組み合わせたQLoRAの特徴や、過学習（オーバーフィッティング）への注意点について学びます。
+5. **演習**
+   - Google Colab上で小さなモデルをLoRAで学習させ、学習の前後で出力がどう変わるかを実際に体験します。
+
+（関連する回：第2回）
+
+--- trace ---
+[tool call]   glossary_get_lecture_summary({'lecture': 2})
+[tool return] glossary_get_lecture_summary -> # 第2回 ファインチューニングとLoRA
+
+## この回のねらい
+
+- 事前学習とファインチューニングの違い、ファインチューニングが向く場面と向かない場面を理解する
+- LoRAの考え方を理解し、Google Colab上で小さなモデルを…
+[usage] 入力 5,942 tokens / 出力 297 tokens / モデル応答 2 回
+=== 2026-11-28 21:09:28 ===
++ uv run pytest -q
+.....................                                                    [100%]
+21 passed in 4.56s
+=== 2026-11-28 21:51:33 ===
++ uv run python -m app.mcp_agent --trace 第99回のクイズを作って
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+申し訳ありませんが、第99回という回は講座に存在しないようです（または用語集にデータがありません）。
+
+現在対応している回の範囲でクイズを出題することは可能ですので、ご希望の回（例えば第1回〜第10回など）を指定していただければ、確認問題を作成いたします！
+
+--- trace ---
+[usage] 入力 2,777 tokens / 出力 67 tokens / モデル応答 1 回
+=== 2026-11-28 21:59:01 ===
++ uv run python -m app.mcp_agent --trace 第99回のクイズを作って
+[11/28/26 12:59:07] ERROR    Tool 'make_quiz' raised an unexpected server.py:455
+                             exception                                          
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:179 in run             │              
+                             │                                   │              
+                             │   176 │   │   │   │   │   return  │              
+                             │       else resolved               │              
+                             │   177 │   │   │   │   pass_direct │              
+                             │   178 │   │   │                   │              
+                             │ ❱ 179 │   │   │   result = await  │              
+                             │       pass_directly)              │              
+                             │   180 │   │   │                   │              
+                             │   181 │   │   │   # Registration  │              
+                             │   182 │   │   │   # a body that r │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/uti │              
+                             │ lities/func_metadata.py:164 in    │              
+                             │ call_fn                           │              
+                             │                                   │              
+                             │   161 │   │   kwargs = arguments  │              
+                             │   162 │   │   if fn_is_async:     │              
+                             │   163 │   │   │   return await fn │              
+                             │ ❱ 164 │   │   return await anyio. │              
+                             │   165 │                           │              
+                             │   166 │   @deprecated(            │              
+                             │   167 │   │   "FuncMetadata.call_ │              
+                             │       3.0; "                      │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/to_thread.py:65 in │              
+                             │ run_sync                          │              
+                             │                                   │              
+                             │   62 │   │   │   stacklevel=2,    │              
+                             │   63 │   │   )                    │              
+                             │   64 │                            │              
+                             │ ❱ 65 │   return await get_async_b │              
+                             │   66 │   │   func, args, abandon_ │              
+                             │   67 │   )                        │              
+                             │   68                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:2706 in                       │              
+                             │ run_sync_in_worker_thread         │              
+                             │                                   │              
+                             │   2703 │   │   │   │   │   worker │              
+                             │   2704 │   │   │   │              │              
+                             │   2705 │   │   │   │   worker.que │              
+                             │ ❱ 2706 │   │   │   │   return awa │              
+                             │   2707 │                          │              
+                             │   2708 │   @classmethod           │              
+                             │   2709 │   def check_cancelled(cl │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:1100 in run                   │              
+                             │                                   │              
+                             │   1097 │   │   │   │   │   except │              
+                             │   1098 │   │   │   │   │   thread │              
+                             │   1099 │   │   │   │   │   try:   │              
+                             │ ❱ 1100 │   │   │   │   │   │   re │              
+                             │   1101 │   │   │   │   │   except │              
+                             │   1102 │   │   │   │   │   │   ex │              
+                             │   1103 │   │   │   │   │   finall │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/app/mcp_server.py:41 in    │              
+                             │ make_quiz                         │              
+                             │                                   │              
+                             │   38 │   │   num_questions: 作成  │              
+                             │   39 │   """                      │              
+                             │   40 │   # ※既存の search_glossar │              
+                             │ ❱ 41 │   entries = GLOSSARY  # 関 │              
+                             │   42 │                            │              
+                             │   43 │   # 1. データ内に実際に存  │              
+                             │   44 │   valid_lectures = sorted( │              
+                             ╰───────────────────────────────────╯              
+                             NameError: name 'GLOSSARY' is not                  
+                             defined                                            
+                                                                                
+                             The above exception was the direct                 
+                             cause of the following exception:                  
+                                                                                
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:442 in _handle_call_tool   │              
+                             │                                   │              
+                             │    439 │   ) -> CallToolResult |  │              
+                             │    440 │   │   context = Context( │              
+                             │        subscriptions=self._subscr │              
+                             │    441 │   │   try:               │              
+                             │ ❱  442 │   │   │   return await s │              
+                             │    443 │   │   except MCPError:   │              
+                             │    444 │   │   │   raise          │              
+                             │    445 │   │   except Exception a │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:548 in call_tool           │              
+                             │                                   │              
+                             │    545 │   │   """                │              
+                             │    546 │   │   if context is None │              
+                             │    547 │   │   │   context = Cont │              
+                             │ ❱  548 │   │   return await self. │              
+                             │        convert_result=True)       │              
+                             │    549 │                          │              
+                             │    550 │   async def list_resourc │              
+                             │    551 │   │   """List all availa │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/tool_manager.py:87 in          │              
+                             │ call_tool                         │              
+                             │                                   │              
+                             │   84 │   │   if not tool:         │              
+                             │   85 │   │   │   raise ToolError( │              
+                             │   86 │   │                        │              
+                             │ ❱ 87 │   │   return await tool.ru │              
+                             │   88                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:213 in run             │              
+                             │                                   │              
+                             │   210 │   │   │   raise ToolError │              
+                             │   211 │   │   except Exception as │              
+                             │   212 │   │   │   # A crash: the  │              
+                             │ ❱ 213 │   │   │   raise Unexpecte │              
+                             │   214                             │              
+                             ╰───────────────────────────────────╯              
+                             UnexpectedToolError: Error executing               
+                             tool make_quiz                                     
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第99回という講義回は用語集やカリキュラムに存在しないため、クイズを作成することができません。
+
+現在ご用意している講義回について確認したい場合は、お気軽にお申し付けください！
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 99})
+[tool error]  glossary_make_quiz -> Error executing tool make_quiz
+[usage] 入力 5,706 tokens / 出力 70 tokens / モデル応答 2 回
+=== 2026-11-28 22:01:11 ===
++ uv run python -m app.mcp_agent --trace 第99回のクイズを作って
+[11/28/26 13:01:17] ERROR    Tool 'make_quiz' raised an unexpected server.py:455
+                             exception                                          
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:179 in run             │              
+                             │                                   │              
+                             │   176 │   │   │   │   │   return  │              
+                             │       else resolved               │              
+                             │   177 │   │   │   │   pass_direct │              
+                             │   178 │   │   │                   │              
+                             │ ❱ 179 │   │   │   result = await  │              
+                             │       pass_directly)              │              
+                             │   180 │   │   │                   │              
+                             │   181 │   │   │   # Registration  │              
+                             │   182 │   │   │   # a body that r │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/uti │              
+                             │ lities/func_metadata.py:164 in    │              
+                             │ call_fn                           │              
+                             │                                   │              
+                             │   161 │   │   kwargs = arguments  │              
+                             │   162 │   │   if fn_is_async:     │              
+                             │   163 │   │   │   return await fn │              
+                             │ ❱ 164 │   │   return await anyio. │              
+                             │   165 │                           │              
+                             │   166 │   @deprecated(            │              
+                             │   167 │   │   "FuncMetadata.call_ │              
+                             │       3.0; "                      │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/to_thread.py:65 in │              
+                             │ run_sync                          │              
+                             │                                   │              
+                             │   62 │   │   │   stacklevel=2,    │              
+                             │   63 │   │   )                    │              
+                             │   64 │                            │              
+                             │ ❱ 65 │   return await get_async_b │              
+                             │   66 │   │   func, args, abandon_ │              
+                             │   67 │   )                        │              
+                             │   68                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:2706 in                       │              
+                             │ run_sync_in_worker_thread         │              
+                             │                                   │              
+                             │   2703 │   │   │   │   │   worker │              
+                             │   2704 │   │   │   │              │              
+                             │   2705 │   │   │   │   worker.que │              
+                             │ ❱ 2706 │   │   │   │   return awa │              
+                             │   2707 │                          │              
+                             │   2708 │   @classmethod           │              
+                             │   2709 │   def check_cancelled(cl │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:1100 in run                   │              
+                             │                                   │              
+                             │   1097 │   │   │   │   │   except │              
+                             │   1098 │   │   │   │   │   thread │              
+                             │   1099 │   │   │   │   │   try:   │              
+                             │ ❱ 1100 │   │   │   │   │   │   re │              
+                             │   1101 │   │   │   │   │   except │              
+                             │   1102 │   │   │   │   │   │   ex │              
+                             │   1103 │   │   │   │   │   finall │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/app/mcp_server.py:45 in    │              
+                             │ make_quiz                         │              
+                             │                                   │              
+                             │   42 │   entries = GLOSSARY  # 関 │              
+                             │   43 │                            │              
+                             │   44 │   # 1. データ内に実際に存  │              
+                             │ ❱ 45 │   valid_lectures = sorted( │              
+                             │   46 │                            │              
+                             │   47 │   # 2. 範囲外チェック（存  │              
+                             │   48 │   if lecture not in valid_ │              
+                             ╰───────────────────────────────────╯              
+                             TypeError: 'PosixPath' object is not               
+                             iterable                                           
+                                                                                
+                             The above exception was the direct                 
+                             cause of the following exception:                  
+                                                                                
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:442 in _handle_call_tool   │              
+                             │                                   │              
+                             │    439 │   ) -> CallToolResult |  │              
+                             │    440 │   │   context = Context( │              
+                             │        subscriptions=self._subscr │              
+                             │    441 │   │   try:               │              
+                             │ ❱  442 │   │   │   return await s │              
+                             │    443 │   │   except MCPError:   │              
+                             │    444 │   │   │   raise          │              
+                             │    445 │   │   except Exception a │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:548 in call_tool           │              
+                             │                                   │              
+                             │    545 │   │   """                │              
+                             │    546 │   │   if context is None │              
+                             │    547 │   │   │   context = Cont │              
+                             │ ❱  548 │   │   return await self. │              
+                             │        convert_result=True)       │              
+                             │    549 │                          │              
+                             │    550 │   async def list_resourc │              
+                             │    551 │   │   """List all availa │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/tool_manager.py:87 in          │              
+                             │ call_tool                         │              
+                             │                                   │              
+                             │   84 │   │   if not tool:         │              
+                             │   85 │   │   │   raise ToolError( │              
+                             │   86 │   │                        │              
+                             │ ❱ 87 │   │   return await tool.ru │              
+                             │   88                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:213 in run             │              
+                             │                                   │              
+                             │   210 │   │   │   raise ToolError │              
+                             │   211 │   │   except Exception as │              
+                             │   212 │   │   │   # A crash: the  │              
+                             │ ❱ 213 │   │   │   raise Unexpecte │              
+                             │   214                             │              
+                             ╰───────────────────────────────────╯              
+                             UnexpectedToolError: Error executing               
+                             tool make_quiz                                     
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第99回という講義回は設定されていない（または用語集に存在しない）ため、クイズを作成することができません。
+
+現在、講座の用語集やカリキュラムに登録されている回（または対応する内容）について確認されたい場合は、お気軽にお申し付けください。
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 99})
+[tool error]  glossary_make_quiz -> Error executing tool make_quiz
+[usage] 入力 5,706 tokens / 出力 85 tokens / モデル応答 2 回
+=== 2026-11-28 22:03:15 ===
++ uv run python -m app.mcp_agent --trace 第6回のクイズ を作って
+[11/28/26 13:03:21] ERROR    Tool 'make_quiz' raised an unexpected server.py:455
+                             exception                                          
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:179 in run             │              
+                             │                                   │              
+                             │   176 │   │   │   │   │   return  │              
+                             │       else resolved               │              
+                             │   177 │   │   │   │   pass_direct │              
+                             │   178 │   │   │                   │              
+                             │ ❱ 179 │   │   │   result = await  │              
+                             │       pass_directly)              │              
+                             │   180 │   │   │                   │              
+                             │   181 │   │   │   # Registration  │              
+                             │   182 │   │   │   # a body that r │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/uti │              
+                             │ lities/func_metadata.py:164 in    │              
+                             │ call_fn                           │              
+                             │                                   │              
+                             │   161 │   │   kwargs = arguments  │              
+                             │   162 │   │   if fn_is_async:     │              
+                             │   163 │   │   │   return await fn │              
+                             │ ❱ 164 │   │   return await anyio. │              
+                             │   165 │                           │              
+                             │   166 │   @deprecated(            │              
+                             │   167 │   │   "FuncMetadata.call_ │              
+                             │       3.0; "                      │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/to_thread.py:65 in │              
+                             │ run_sync                          │              
+                             │                                   │              
+                             │   62 │   │   │   stacklevel=2,    │              
+                             │   63 │   │   )                    │              
+                             │   64 │                            │              
+                             │ ❱ 65 │   return await get_async_b │              
+                             │   66 │   │   func, args, abandon_ │              
+                             │   67 │   )                        │              
+                             │   68                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:2706 in                       │              
+                             │ run_sync_in_worker_thread         │              
+                             │                                   │              
+                             │   2703 │   │   │   │   │   worker │              
+                             │   2704 │   │   │   │              │              
+                             │   2705 │   │   │   │   worker.que │              
+                             │ ❱ 2706 │   │   │   │   return awa │              
+                             │   2707 │                          │              
+                             │   2708 │   @classmethod           │              
+                             │   2709 │   def check_cancelled(cl │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:1100 in run                   │              
+                             │                                   │              
+                             │   1097 │   │   │   │   │   except │              
+                             │   1098 │   │   │   │   │   thread │              
+                             │   1099 │   │   │   │   │   try:   │              
+                             │ ❱ 1100 │   │   │   │   │   │   re │              
+                             │   1101 │   │   │   │   │   except │              
+                             │   1102 │   │   │   │   │   │   ex │              
+                             │   1103 │   │   │   │   │   finall │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/app/mcp_server.py:45 in    │              
+                             │ make_quiz                         │              
+                             │                                   │              
+                             │   42 │   entries = GLOSSARY  # 関 │              
+                             │   43 │                            │              
+                             │   44 │   # 1. データ内に実際に存  │              
+                             │ ❱ 45 │   valid_lectures = sorted( │              
+                             │   46 │                            │              
+                             │   47 │   # 2. 範囲外チェック（存  │              
+                             │   48 │   if lecture not in valid_ │              
+                             ╰───────────────────────────────────╯              
+                             TypeError: 'PosixPath' object is not               
+                             iterable                                           
+                                                                                
+                             The above exception was the direct                 
+                             cause of the following exception:                  
+                                                                                
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:442 in _handle_call_tool   │              
+                             │                                   │              
+                             │    439 │   ) -> CallToolResult |  │              
+                             │    440 │   │   context = Context( │              
+                             │        subscriptions=self._subscr │              
+                             │    441 │   │   try:               │              
+                             │ ❱  442 │   │   │   return await s │              
+                             │    443 │   │   except MCPError:   │              
+                             │    444 │   │   │   raise          │              
+                             │    445 │   │   except Exception a │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:548 in call_tool           │              
+                             │                                   │              
+                             │    545 │   │   """                │              
+                             │    546 │   │   if context is None │              
+                             │    547 │   │   │   context = Cont │              
+                             │ ❱  548 │   │   return await self. │              
+                             │        convert_result=True)       │              
+                             │    549 │                          │              
+                             │    550 │   async def list_resourc │              
+                             │    551 │   │   """List all availa │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/tool_manager.py:87 in          │              
+                             │ call_tool                         │              
+                             │                                   │              
+                             │   84 │   │   if not tool:         │              
+                             │   85 │   │   │   raise ToolError( │              
+                             │   86 │   │                        │              
+                             │ ❱ 87 │   │   return await tool.ru │              
+                             │   88                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:213 in run             │              
+                             │                                   │              
+                             │   210 │   │   │   raise ToolError │              
+                             │   211 │   │   except Exception as │              
+                             │   212 │   │   │   # A crash: the  │              
+                             │ ❱ 213 │   │   │   raise Unexpecte │              
+                             │   214                             │              
+                             ╰───────────────────────────────────╯              
+                             UnexpectedToolError: Error executing               
+                             tool make_quiz                                     
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第6回「外部ツールとMCP」の講義内容をもとに、理解度確認クイズを3問作成しました。ぜひチャレンジしてみてください！
+
+---
+
+### 第6回：理解度確認クイズ
+
+#### 第1問（MCPの基本概念）
+エージェント開発において、ツールを公開する側（サーバー）と使う側（クライアント）の間を繋ぐ共通規約である **MCP（Model Context Protocol）** を導入する主なメリットとして正しいものはどれですか？
+
+1. LLM自体の推論速度を数倍に高速化できる。
+2. サーバーを1つ実装しておけば、対応するどのMCPクライアントからも共通の手順で同じツールを再利用できる。
+3. 外部のAPIキーが一切不要になり、すべてのサービスを無料で呼び出せるようになる。
+
+---
+
+#### 第2問（トランスポート）
+MCPにおける接続方式（トランスポート）のうち、クライアントがサーバーを自分のサブプロセスとして起動し、標準入出力（stdin/stdout）を介してメッセージをやり取りする方式の特徴として正しいものはどれですか？
+
+1. 別の機械（リモートホスト）にあるサーバーにも、URLを指定するだけで簡単につながる。
+2. ローカル環境で手軽にサーバーを立ち上げて動かすのに適しており、追加のネットワーク設定が不要。
+3. ブラウザ上のアプリケーションから直接呼び出す場合にのみ利用できる。
+
+---
+
+#### 第3問（名前空間とコスト）
+複数のMCPサーバーを同時に接続してエージェントに利用させるとき、ツール名が重複しないようにする仕組みや、ツールが増えた場合の注意点として正しいものはどれですか？
+
+1. 複数サーバーのツールは自動的にすべて同じ名前に統合され、モデルが文脈から推論する。
+2. ツール名が「`サーバー名_ツール名`」のように名前空間で区別されるが、ツールが増えるほどモデルに渡す説明文が増え、トークン数や呼び分けの精度に影響する。
+3. 接続できるMCPサーバーの数は常に最大1つまでと制限されている。
+
+---
+
+**関連回：** 第6回
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 6})
+[tool error]  glossary_make_quiz -> Error executing tool make_quiz
+[tool call]   glossary_get_lecture_summary({'lecture': 6})
+[tool return] glossary_get_lecture_summary -> # 第6回 外部ツールとMCP
+
+## この回のねらい
+
+- エージェントのツールを、アプリの中の関数から「外部のサービス」として切り出す考え方を理解する
+- MCP（Model Context Protocol）で、ツールをクライアントを…
+[usage] 入力 9,164 tokens / 出力 501 tokens / モデル応答 3 回
+=== 2026-11-28 22:08:14 ===
++ uv run python -m app.mcp_agent --trace 第6回のクイズ を作って
+[11/28/26 13:08:19] ERROR    Tool 'make_quiz' raised an unexpected server.py:455
+                             exception                                          
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:179 in run             │              
+                             │                                   │              
+                             │   176 │   │   │   │   │   return  │              
+                             │       else resolved               │              
+                             │   177 │   │   │   │   pass_direct │              
+                             │   178 │   │   │                   │              
+                             │ ❱ 179 │   │   │   result = await  │              
+                             │       pass_directly)              │              
+                             │   180 │   │   │                   │              
+                             │   181 │   │   │   # Registration  │              
+                             │   182 │   │   │   # a body that r │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/uti │              
+                             │ lities/func_metadata.py:164 in    │              
+                             │ call_fn                           │              
+                             │                                   │              
+                             │   161 │   │   kwargs = arguments  │              
+                             │   162 │   │   if fn_is_async:     │              
+                             │   163 │   │   │   return await fn │              
+                             │ ❱ 164 │   │   return await anyio. │              
+                             │   165 │                           │              
+                             │   166 │   @deprecated(            │              
+                             │   167 │   │   "FuncMetadata.call_ │              
+                             │       3.0; "                      │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/to_thread.py:65 in │              
+                             │ run_sync                          │              
+                             │                                   │              
+                             │   62 │   │   │   stacklevel=2,    │              
+                             │   63 │   │   )                    │              
+                             │   64 │                            │              
+                             │ ❱ 65 │   return await get_async_b │              
+                             │   66 │   │   func, args, abandon_ │              
+                             │   67 │   )                        │              
+                             │   68                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:2706 in                       │              
+                             │ run_sync_in_worker_thread         │              
+                             │                                   │              
+                             │   2703 │   │   │   │   │   worker │              
+                             │   2704 │   │   │   │              │              
+                             │   2705 │   │   │   │   worker.que │              
+                             │ ❱ 2706 │   │   │   │   return awa │              
+                             │   2707 │                          │              
+                             │   2708 │   @classmethod           │              
+                             │   2709 │   def check_cancelled(cl │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:1100 in run                   │              
+                             │                                   │              
+                             │   1097 │   │   │   │   │   except │              
+                             │   1098 │   │   │   │   │   thread │              
+                             │   1099 │   │   │   │   │   try:   │              
+                             │ ❱ 1100 │   │   │   │   │   │   re │              
+                             │   1101 │   │   │   │   │   except │              
+                             │   1102 │   │   │   │   │   │   ex │              
+                             │   1103 │   │   │   │   │   finall │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/app/mcp_server.py:41 in    │              
+                             │ make_quiz                         │              
+                             │                                   │              
+                             │   38 │   │   num_questions: 作成  │              
+                             │   39 │   """                      │              
+                             │   40 │   # ※既存の search_glossar │              
+                             │ ❱ 41 │   entries = json.loads(GLO │              
+                             │   42 │                            │              
+                             │   43 │   # 1. データ内に実際に存  │              
+                             │   44 │   valid_lectures = sorted( │              
+                             ╰───────────────────────────────────╯              
+                             NameError: name 'GLOSSARY' is not                  
+                             defined                                            
+                                                                                
+                             The above exception was the direct                 
+                             cause of the following exception:                  
+                                                                                
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:442 in _handle_call_tool   │              
+                             │                                   │              
+                             │    439 │   ) -> CallToolResult |  │              
+                             │    440 │   │   context = Context( │              
+                             │        subscriptions=self._subscr │              
+                             │    441 │   │   try:               │              
+                             │ ❱  442 │   │   │   return await s │              
+                             │    443 │   │   except MCPError:   │              
+                             │    444 │   │   │   raise          │              
+                             │    445 │   │   except Exception a │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:548 in call_tool           │              
+                             │                                   │              
+                             │    545 │   │   """                │              
+                             │    546 │   │   if context is None │              
+                             │    547 │   │   │   context = Cont │              
+                             │ ❱  548 │   │   return await self. │              
+                             │        convert_result=True)       │              
+                             │    549 │                          │              
+                             │    550 │   async def list_resourc │              
+                             │    551 │   │   """List all availa │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/tool_manager.py:87 in          │              
+                             │ call_tool                         │              
+                             │                                   │              
+                             │   84 │   │   if not tool:         │              
+                             │   85 │   │   │   raise ToolError( │              
+                             │   86 │   │                        │              
+                             │ ❱ 87 │   │   return await tool.ru │              
+                             │   88                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:213 in run             │              
+                             │                                   │              
+                             │   210 │   │   │   raise ToolError │              
+                             │   211 │   │   except Exception as │              
+                             │   212 │   │   │   # A crash: the  │              
+                             │ ❱ 213 │   │   │   raise Unexpecte │              
+                             │   214                             │              
+                             ╰───────────────────────────────────╯              
+                             UnexpectedToolError: Error executing               
+                             tool make_quiz                                     
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第6回「外部ツールとMCP」の講義内容をもとに、理解度確認クイズを3問作成しました。ぜひ挑戦してみてください！
+
+---
+
+### 第6回：理解度確認クイズ
+
+#### 第1問：MCP（Model Context Protocol）の役割と特徴
+MCP（Model Context Protocol）を活用する最大のメリットとして、最も適切なものはどれでしょうか？
+
+1. LLM自体のパラメータチューニングや重みの書き換えを、外部サーバーからリモートで行えるようにする
+2. ツールを提供する側（MCPサーバー）と利用する側（MCPクライアント）の間で共通の規約を設け、対応するクライアントならどれでも同じツールを共有・利用できるようにする
+3. エージェントのプロンプト作成を自動化し、モデルのハルシネーション（幻覚）を完全にゼロにする
+4. LLMの推論にかかるAPIコストやトークン消費量を、ローカル環境で無制限にゼロにする
+
+---
+
+#### 第2問：トランスポート（通信方式）
+MCPにおける「stdio」トランスポートの説明として、正しいものはどれでしょうか？
+
+1. サーバーを独立したクラウド上のURLで常時待ち受けさせ、インターネットを介して世界中からアクセスする方式
+2. クライアントがサーバーをサブプロセスとして起動し、標準入出力（stdin / stdout）を介してやり取りを行う方式
+3. データベースのストレージファイルを直接読み書きして、プロセス間通信を完全にバイパスする方式
+4. WebブラウザのWebSocket専用プロトコルを用いて、リアルタイムに画面描画と同期を行う方式
+
+---
+
+#### 第3問：安全性とツール管理
+MCPサーバーを利用する際や運用する際の注意点として、**不適切なもの**はどれでしょうか？
+
+1. 複数サーバーを同時に利用する場合、ツール名が衝突しないように「サーバー名_ツール名」などの名前空間で区別される。
+2. 使うツールが増えるほどモデルに渡す説明文やトークン数が増加し、呼び分けの精度やコストに影響を与える。
+3. MCPサーバーは任意のコードを実行できるため、出所の分からない信頼できないサーバーを設定ファイルに安易に記述すべきではない。
+4. HTTPでMCPサーバーを公開する場合、ポート転送などの設定は特に行わず、誰でも無制限にアクセスできるようにするのが標準的なベストプラクティスである。
+
+---
+
+答え合わせをしたいときや、解説がほしいときはいつでも声をかけてくださいね！
+
+（関連回：第6回 外部ツールとMCP）
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 6})
+[tool error]  glossary_make_quiz -> Error executing tool make_quiz
+[tool call]   glossary_get_lecture_summary({'lecture': 6})
+[tool return] glossary_get_lecture_summary -> # 第6回 外部ツールとMCP
+
+## この回のねらい
+
+- エージェントのツールを、アプリの中の関数から「外部のサービス」として切り出す考え方を理解する
+- MCP（Model Context Protocol）で、ツールをクライアントを…
+[usage] 入力 9,164 tokens / 出力 586 tokens / モデル応答 3 回
+=== 2026-11-28 22:08:47 ===
++ uv run python -m app.mcp_agent --trace 第6回のクイズ を作って
+[11/28/26 13:08:53] ERROR    Tool 'make_quiz' raised an unexpected server.py:455
+                             exception                                          
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:179 in run             │              
+                             │                                   │              
+                             │   176 │   │   │   │   │   return  │              
+                             │       else resolved               │              
+                             │   177 │   │   │   │   pass_direct │              
+                             │   178 │   │   │                   │              
+                             │ ❱ 179 │   │   │   result = await  │              
+                             │       pass_directly)              │              
+                             │   180 │   │   │                   │              
+                             │   181 │   │   │   # Registration  │              
+                             │   182 │   │   │   # a body that r │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/uti │              
+                             │ lities/func_metadata.py:164 in    │              
+                             │ call_fn                           │              
+                             │                                   │              
+                             │   161 │   │   kwargs = arguments  │              
+                             │   162 │   │   if fn_is_async:     │              
+                             │   163 │   │   │   return await fn │              
+                             │ ❱ 164 │   │   return await anyio. │              
+                             │   165 │                           │              
+                             │   166 │   @deprecated(            │              
+                             │   167 │   │   "FuncMetadata.call_ │              
+                             │       3.0; "                      │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/to_thread.py:65 in │              
+                             │ run_sync                          │              
+                             │                                   │              
+                             │   62 │   │   │   stacklevel=2,    │              
+                             │   63 │   │   )                    │              
+                             │   64 │                            │              
+                             │ ❱ 65 │   return await get_async_b │              
+                             │   66 │   │   func, args, abandon_ │              
+                             │   67 │   )                        │              
+                             │   68                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:2706 in                       │              
+                             │ run_sync_in_worker_thread         │              
+                             │                                   │              
+                             │   2703 │   │   │   │   │   worker │              
+                             │   2704 │   │   │   │              │              
+                             │   2705 │   │   │   │   worker.que │              
+                             │ ❱ 2706 │   │   │   │   return awa │              
+                             │   2707 │                          │              
+                             │   2708 │   @classmethod           │              
+                             │   2709 │   def check_cancelled(cl │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/anyio/_backends/_asyncio │              
+                             │ .py:1100 in run                   │              
+                             │                                   │              
+                             │   1097 │   │   │   │   │   except │              
+                             │   1098 │   │   │   │   │   thread │              
+                             │   1099 │   │   │   │   │   try:   │              
+                             │ ❱ 1100 │   │   │   │   │   │   re │              
+                             │   1101 │   │   │   │   │   except │              
+                             │   1102 │   │   │   │   │   │   ex │              
+                             │   1103 │   │   │   │   │   finall │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/app/mcp_server.py:45 in    │              
+                             │ make_quiz                         │              
+                             │                                   │              
+                             │   42 │   entries = json.loads(GLO │              
+                             │   43 │                            │              
+                             │   44 │   # 1. データ内に実際に存  │              
+                             │ ❱ 45 │   valid_lectures = sorted( │              
+                             │   46 │                            │              
+                             │   47 │   # 2. 範囲外チェック（存  │              
+                             │   48 │   if lecture not in valid_ │              
+                             ╰───────────────────────────────────╯              
+                             TypeError: string indices must be                  
+                             integers, not 'str'                                
+                                                                                
+                             The above exception was the direct                 
+                             cause of the following exception:                  
+                                                                                
+                             ╭─ Traceback (most recent call last─╮              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:442 in _handle_call_tool   │              
+                             │                                   │              
+                             │    439 │   ) -> CallToolResult |  │              
+                             │    440 │   │   context = Context( │              
+                             │        subscriptions=self._subscr │              
+                             │    441 │   │   try:               │              
+                             │ ❱  442 │   │   │   return await s │              
+                             │    443 │   │   except MCPError:   │              
+                             │    444 │   │   │   raise          │              
+                             │    445 │   │   except Exception a │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/ser │              
+                             │ ver.py:548 in call_tool           │              
+                             │                                   │              
+                             │    545 │   │   """                │              
+                             │    546 │   │   if context is None │              
+                             │    547 │   │   │   context = Cont │              
+                             │ ❱  548 │   │   return await self. │              
+                             │        convert_result=True)       │              
+                             │    549 │                          │              
+                             │    550 │   async def list_resourc │              
+                             │    551 │   │   """List all availa │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/tool_manager.py:87 in          │              
+                             │ call_tool                         │              
+                             │                                   │              
+                             │   84 │   │   if not tool:         │              
+                             │   85 │   │   │   raise ToolError( │              
+                             │   86 │   │                        │              
+                             │ ❱ 87 │   │   return await tool.ru │              
+                             │   88                              │              
+                             │                                   │              
+                             │ /workspaces/lecture-ai-engineerin │              
+                             │ g-2026/.venv/lib/python3.12/site- │              
+                             │ packages/mcp/server/mcpserver/too │              
+                             │ ls/base.py:213 in run             │              
+                             │                                   │              
+                             │   210 │   │   │   raise ToolError │              
+                             │   211 │   │   except Exception as │              
+                             │   212 │   │   │   # A crash: the  │              
+                             │ ❱ 213 │   │   │   raise Unexpecte │              
+                             │   214                             │              
+                             ╰───────────────────────────────────╯              
+                             UnexpectedToolError: Error executing               
+                             tool make_quiz                                     
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第6回「外部ツールとMCP」の講義内容をもとに、理解度確認クイズを3問作成しました。ぜひ挑戦してみてください！
+
+---
+
+### 第6回：理解度確認クイズ
+
+#### 第1問：MCP（Model Context Protocol）の役割と仕組み
+MCPに関する説明として、**正しいもの**をすべて選んでください。
+
+1. MCPは、ツールを公開する側（MCPサーバー）と使う側（MCPクライアント）の間の共通規約である。
+2. MCPサーバーが公開するのは、ツールの名前、説明文、引数のスキーマであり、LLM（モデル）はこの情報を見て呼び出しを決定する。
+3. トランスポートとして、標準入出力（stdio）を使う方法だけでなく、URLで待ち受けるStreamable HTTPを使う方法もある。
+4. 複数のMCPサーバーを同時に接続する場合、ツール同士の名前の衝突を防ぐために「サーバー名_ツール名」のような名前空間で区別される。
+
+---
+
+#### 第2問：トランスポート方式（stdio と Streamable HTTP）
+MCPのトランスポート方式に関する次の記述の、空欄（ A ）と（ B ）に当てはまる語句の正しい組み合わせを選んでください。
+
+> クライアントがサーバーをサブプロセスとして起動し、標準入出力でやりとりする方式を **（ A ）** といい、サーバーがURLで待ち受け、別の機械やコンテナからも接続できる方式を **（ B ）** という。
+
+1. A: stdio / B: Streamable HTTP
+2. A: Streamable HTTP / B: stdio
+3. A: REST API / B: WebSocket
+4. A: Webhook / B: gRPC
+
+---
+
+#### 第3問：MCPのセキュリティと注意点
+MCPサーバーを利用する際のセキュリティや注意点について、**適切でないもの**を選んでください。
+
+1. MCPサーバーは任意のコードを実行する可能性があるため、出所の分からないサーバーを安易に設定ファイル（mcpServers形式）に記述してはならない。
+2. HTTP等でMCPサーバーを公開する場合は、適切な認証を設定したり、公開範囲（例：Codespacesのポート転送の既定など）を考慮する必要がある。
+3. MCPサーバーを導入すれば、利用者がどのような操作（ファイルの書き込みや外部へのデータ送信など）を許可しているかに関わらず、すべてのリスクが自動的に完全に防がれる。
+4. 複数のMCPサーバーを追加していくと、モデルに渡す説明文やトークン数が増加するため、呼び分けの精度やコストに影響を与える。
+
+---
+
+（関連回：第6回）
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 6})
+[tool error]  glossary_make_quiz -> Error executing tool make_quiz
+[tool call]   glossary_get_lecture_summary({'lecture': 6})
+[tool return] glossary_get_lecture_summary -> # 第6回 外部ツールとMCP
+
+## この回のねらい
+
+- エージェントのツールを、アプリの中の関数から「外部のサービス」として切り出す考え方を理解する
+- MCP（Model Context Protocol）で、ツールをクライアントを…
+[usage] 入力 9,164 tokens / 出力 602 tokens / モデル応答 3 回
+=== 2026-11-28 22:13:17 ===
++ uv run python -m app.mcp_agent --trace 第6回のクイズ を作って
+Installed 46 packages in 607ms
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第6回の学習内容（MCPと外部ツールの連携など）をもとに、理解度を確認するためのクイズを3問作成しました。ぜひ挑戦してみてください！
+
+---
+
+### 第6回：理解度確認クイズ
+
+#### 第1問：トランスポート（stdio・Streamable HTTP）
+MCPのクライアントとサーバー間のやりとりにおけるトランスポート方式に関する説明として、**正しいもの**はどれですか？
+
+1. `stdio` では、サーバーがインターネット上の専用URLで待ち受け、不特定多数からの接続を受け付ける。
+2. `Streamable HTTP` では、クライアントがサーバーをサブプロセスとして直接起動し、同一マシン内で標準入出力により通信を行う。
+3. `stdio` は、クライアントがサーバーをサブプロセスとして起動し、標準入出力でメッセージを交換するため、手軽に同じ機械の中で使う場合に適している。
+4. `Streamable HTTP` と `stdio` は、どちらも公開範囲や認証を一切気にする必要がない共通の仕様である。
+
+---
+
+#### 第2問：mcpServers設定
+利用するMCPサーバーを定義する `mcpServers設定` に関する記述として、**誤っているもの**はどれですか？
+
+1. サーバーごとに名前と、起動コマンド（stdio）または接続先URL（HTTP）を記述する。
+2. Claude Desktop、Cursor、Pydantic AIなどのツールでは、同じ `mcpServers` 形式の設定ファイルを読み込む。
+3. VS Code / Copilot Chat では、`mcpServers` ではなく `servers` という形式の設定が使われる。
+4. 設定ファイルにサーバーの情報を記述すると複雑なプログラムの書き換えが必要になり、MCPサーバーを簡単に追加・拡張することはできない。
+
+---
+
+#### 第3問：外部ツール
+第3回で学んだ「関数ツール」と、第6回で扱う「外部ツール」の違いについて、適切な説明はどれですか？
+
+1. 関数ツールはプログラムのプロセスや機械をまたいで呼び出されるが、外部ツールは必ず同じプロセス内で動く。
+2. 外部ツールはWebページの取得やファイル操作、他社APIなどプログラムの外にある機能を、MCPなどの共通規約を使ってプロセスや機械をまたいで呼び出すものである。
+3. 外部ツールを使うためには、AIモデル自体をローカル環境で再学習させる必要がある。
+4. 外部ツールと関数ツールには仕組み上の違いはなく、単に呼び出し時の関数名を指す言葉が違うだけである。
+
+---
+
+### 💡 ヒント・考え方
+* **第1問**: クライアントがサーバーを「サブプロセス」として起動する場合の入出力方式（標準入出力）を思い出してみましょう。
+* **第2問**: 「設定を数行足すだけでツールが増える」というMCPの体験の核心に立ち返ってみてください。
+* **第3問**: プロセスや機械の「内」と「外」の通信、そしてMCPがどのような役割を果たしているかを整理してみましょう。
+
+---
+関連する回：第6回
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 6})
+[tool return] glossary_make_quiz -> 以下の第6回の用語データをもとに、3問の4択クイズと解説を作成してください。
+1. 用語: トランスポート（stdio・Streamable HTTP） / 定義: MCPのクライアントとサーバーがやりとりする経路。stdioでは、クライア…
+[usage] 入力 5,983 tokens / 出力 673 tokens / モデル応答 2 回
+=== 2026-11-28 22:13:39 ===
++ uv run python -m app.mcp_agent --trace 第99回のクイズを作って
+[server] glossary: コマンドで起動（uv run python -m app.mcp_server）
+[server] fetch: コマンドで起動（uvx mcp-server-fetch==2026.11.11 --no-readability-js）
+[server] aws: URL に接続（https://knowledge-mcp.global.api.aws）
+[model] gemini-3.5-flash-lite
+[tools] MCP サーバー（app/mcp_servers.json）
+第99回のデータは存在しません。指定できる講義回は **第1回、第2回、第3回、第4回、第6回** です。
+
+どの回のクイズを作成しますか？該当する回を指定してください。
+
+--- trace ---
+[tool call]   glossary_make_quiz({'num_questions': 3, 'lecture': 99})
+[tool return] glossary_make_quiz -> 第99回のデータは存在しません。指定できる講義回は [1, 2, 3, 4, 6] です。…
+[usage] 入力 5,726 tokens / 出力 77 tokens / モデル応答 2 回
